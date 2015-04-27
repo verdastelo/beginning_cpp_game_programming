@@ -1,0 +1,39 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std; 
+
+int main()
+
+{
+  srand(time(0)); 
+  int random_number = rand(); 
+  cout << "I've chosen a number between 1 and 100. Can you guess it? " << endl; 
+  int chosen_number = (random_number % 100) + 1; 
+  
+//  cout << chosen_number << endl; 
+  
+  int your_guess = 0;  
+  int attempts = 1; 
+  
+  while (cin >> your_guess) { 
+    
+    if (your_guess == chosen_number) {
+    break;        
+    }
+    else if (your_guess > chosen_number) {
+    cout << "Too high." << endl;    
+    ++attempts; 
+    }
+    else if (your_guess < chosen_number) {
+    cout << "Too low." << endl; 
+    ++attempts; 
+    }
+    
+  }
+  
+  cout << "You guessed it right in " << attempts << " attempts." << endl; 
+  
+  return 0; 
+}
