@@ -1,0 +1,74 @@
+#include <iostream> 
+#include <string>
+#include <ctime>
+#include <cstdlib>
+
+using namespace std; 
+
+int main()
+
+{
+	enum fields {WORD, HINT, NUM_FIELDS}; 										// This is a custom field. WORD = 0, HINT = 1, NUM_FIELDS = 2
+	const int NUM_WORDS = 5; 													// A constant integer 
+	const string WORDS[NUM_WORDS][NUM_FIELDS] =
+	{
+		{"wall", "Do you think you're banging your head against something?"},
+		{"glasses", "These might help you see the answer."},
+		{"labored", "Going slowly, is it?"},
+		{"persistent", "Keep at it!"},
+		{"jumble", "It's what the game is all about."}
+
+	}; 																			// A 5x2 matrix. Values range from (0,0) to (4,1). 
+
+	srand(static_cast<unsigned int> (time(0))); 								// Generate a random number. How does it work? No idea. 
+	int choice = (rand() % NUM_WORDS);
+	string theWord = WORDS[choice][WORD];
+	string theHint = WORDS[choice][HINT];
+
+
+	string jumble = theWord; 
+	int length = jumble.size();
+	for (int i = 0; i < length; ++i) {
+		int index1 = (rand() % length);
+		int index2 = (rand() % length);
+		char temp = jumble[index1];
+		jumble[index1] = jumble[index2];
+		jumble[index2] = temp;
+	}
+
+	cout << "\t\t\t Welcome to Word Jumble. \n\n ";
+	cout << "Unscramble the letters to make a word.\n";
+	cout << "Enter 'hint' for a hint.\n";
+	cout << "Enter 'quit' to quit the game.\n";
+
+	cout << "The jumble is: " << jumble; 
+
+	string guess; 
+	cout << "\n\n Your guess\n"; 
+	cin >> guess; 
+
+	int n = 0; 
+
+	while ((guess != theWord) && (guess != "quit"))
+	{
+		if (guess == "hint") {
+			cout << theHint;
+			++n; 
+		}
+		else 
+			cout << "Sorry, that's not it."; 
+
+	cout << "\n\n Your guess : "; 
+	cin >> guess; 
+
+	}
+
+	if (guess == theWord)
+		cout << "\nThat's it. You guessed it.\n";
+
+	cout << "Your score is " << theWord.size() - n << endl; 
+
+	cout << "\nThanks for playing.\n";
+
+	return 0; 
+}
